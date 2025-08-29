@@ -1,7 +1,6 @@
 # Dockerfile
 FROM python:3.12-slim
 
-# Prevent Python from writing pyc files & enable unbuffered output
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
@@ -17,5 +16,5 @@ COPY . /app/
 # Collect static files
 RUN python manage.py collectstatic --noinput
 
-# Run Gunicorn
-CMD ["gunicorn", "Staking.wsgi:application", "--bind", "0.0.0.0:$PORT"]
+# Run Gunicorn using shell to read $PORT
+CMD sh -c "gunicorn Staking.wsgi:application --bind 0.0.0.0:${PORT:-8000}"
