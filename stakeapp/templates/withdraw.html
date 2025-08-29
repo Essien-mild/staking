@@ -1,0 +1,158 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Withdrawal</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" />
+  <link rel="stylesheet" href="{% static 'css/deposit.css' %}" />
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="logo">Carlsberg</div>
+    <div class="nav-menu">
+      <a href="{% url 'dashboard' %}" class="nav-item"><i class="fas fa-home"></i><span>Home</span></a>
+      <a href="{% url 'deposit' %}" class="nav-item"><i class="fa-solid fa-money-bill-1"></i><span>Deposit</span></a>
+      <a href="{% url 'withdraw' %}" class="nav-item active"><i class="fas fa-wallet"></i><span>Withdrawal</span></a>
+      <a href="{% url 'plans' %}" class="nav-item"><i class="fa-solid fa-arrow-up-right-from-square"></i><span>Staking</span></a>
+      <a href="{% url 'transaction_history' %}" class="nav-item"><i class="fa-solid fa-rotate"></i><span>Transactions</span></a>
+      <a href="{% url 'logout' %}" class="nav-item"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Header -->
+    <div class="header">
+      <div class="welcome-section">
+        <p class="greeting">Hello! {{ request.user.username|default:"User" }}</p>
+        <h1 class="welcome-title">Withdraw with ease, save before spending</h1>
+      </div>
+      <div class="header-right">
+        <div class="user-profile">
+          <img src="{% static 'images/default.jpeg' %}" alt="User" class="profile-pic" />
+        </div>
+        <div class="hamburger-menu"><i class="ri-menu-line"></i></div>
+      </div>
+    </div>
+
+    <!-- Intro Section -->
+    <div class="crypto-section">
+      <h2 class="section-title">Withdrawal</h2>
+      <p>
+        Ready to withdraw your funds? It’s quick and secure! Fill out the form below and we’ll process your request. 
+        Ensure all information is accurate. Quick reminder — you're a "save before spending" user.
+      </p>
+    </div>
+   
+    <!-- Display any non-field errors (like password or balance issues) -->
+    {% if form.non_field_errors %}
+     <div class="crypto-section">
+        <p class="error">
+            {% for error in form.non_field_errors %}
+                {{ error }}
+            {% endfor %}
+        </p>
+        </div>
+    {% endif %}
+
+
+<!-- Withdrawal Form -->
+<div class="form-section">
+    <h2 class="section-title">Enter</h2>
+    <form id="proof-form" method="post">
+        {% csrf_token %}
+
+        <!-- Email Field -->
+        <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" name="email" id="email" placeholder="Enter your personal email"
+                   value="{{ form.email.value|default_if_none:'' }}" required>
+            {% if form.email.errors %}
+                <p class="error">
+                    {% for error in form.email.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </p>
+            {% endif %}
+        </div>
+
+        <!-- Amount Field -->
+        <div class="form-group">
+            <label>Amount ($)</label>
+            <input type="number" name="amount" id="amount" min="2000" placeholder="Enter amount"
+                   value="{{ form.amount.value|default_if_none:'' }}" required>
+            {% if form.amount.errors %}
+                <p class="error">
+                    {% for error in form.amount.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </p>
+            {% endif %}
+        </div>
+
+        <!-- Wallet Address Field -->
+        <div class="form-group">
+            <label>USDT Wallet Address</label>
+            <input type="text" name="bitcoin_address" id="bitcoin_address"
+                   placeholder="Enter USDT wallet address"
+                   value="{{ form.bitcoin_address.value|default_if_none:'' }}" required>
+            {% if form.bitcoin_address.errors %}
+                <p class="error">
+                    {% for error in form.bitcoin_address.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </p>
+            {% endif %}
+        </div>
+
+        <!-- Password Field -->
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" name="password" id="password" placeholder="Enter password" required>
+            {% if form.password.errors %}
+                <p class="error">
+                    {% for error in form.password.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </p>
+            {% endif %}
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="submit-btn">Withdraw</button>
+    </form>
+</div>
+
+    <!-- sckiasyrdicudihufikd -->
+
+    <div class="form-section" style="margin-top: 10px;">
+      <p class="greeting">All rights reserved | Carlsberg Staking</p>
+    </div>
+  </div>
+
+  <!-- Sidebar Toggle Script -->
+  <script>
+    const hamburgerMenu = document.querySelector('.hamburger-menu');
+    const sidebar = document.querySelector('.sidebar');
+    const mainContent = document.querySelector('.main-content');
+
+    hamburgerMenu.addEventListener('click', () => {
+      sidebar.classList.toggle('active');
+      mainContent.classList.toggle('sidebar-active');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!sidebar.contains(e.target) && !hamburgerMenu.contains(e.target) && sidebar.classList.contains('active')) {
+        sidebar.classList.remove('active');
+        mainContent.classList.remove('sidebar-active');
+      }
+    });
+  </script>
+   <script src="//code.jivosite.com/widget/Bi2zIf0O8h" async></script>
+</body>
+</html>

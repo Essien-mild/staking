@@ -1,0 +1,181 @@
+@import url("https://fonts.googleapis.com/css2?family=Merriweather:wght@900&family=Poppins:wght@400;500&display=swap");
+
+:root {
+  --primary-color: #044386;
+  --primary-color-dark: #110350;
+  --text-dark: #111827;
+  --text-light: #9ca3af;
+  --white: #ffffff;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+img {
+  width: 100%;
+}
+
+body {
+  /* font-family: 'Merriweather', serif; */
+  font-family: "Poppins", sans-serif;
+  min-height: 100vh;
+  background-image: linear-gradient(
+      rgba(255, 255, 255, 0.9),
+      rgba(255, 255, 255, 0.9)
+    ),
+     url("../images/background.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  width: 100%;
+  max-width: 500px;
+  padding: 2rem 1rem;
+  background-color: var(--white);
+  border-radius: 5px;
+  box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.2);
+}
+
+.content {
+  width: 100%;
+  max-width: 350px;
+  margin: auto;
+  text-align: center;
+}
+
+.logo img {
+  max-width: 100px;
+}
+
+.header {
+  font-family: "Merriweather", serif;
+  font-size: 2.5rem;
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+}
+
+.subheader {
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  color: var(--text-dark);
+}
+
+.auth__logins {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.login {
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  color: var(--text-dark);
+  border: 1px solid var(--text-dark);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.login img {
+  max-width: 20px;
+}
+
+.divider {
+  padding: 1rem;
+  position: relative;
+  isolation: isolate;
+}
+
+.divider::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: var(--text-light);
+  z-index: -1;
+}
+
+.divider span {
+  display: inline-block;
+  padding: 0.5rem;
+  color: var(--text-light);
+  background-color: var(--white);
+}
+
+form {
+  display: grid;
+  gap: 0.5rem;
+}
+
+form input {
+  padding: 1rem;
+  font-size: 1rem;
+  color: var(--text-dark);
+  outline: none;
+  border: 1px solid var(--text-light);
+  border-radius: 5px;
+}
+
+form button {
+  padding: 1rem;
+  font-size: 1rem;
+  color: var(--white);
+  background-color: var(--primary-color);
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+form button:hover {
+  background-color: var(--primary-color-dark);
+}
+
+.remember__me {
+  margin: 2rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-light);
+  cursor: pointer;
+}
+
+.footer p {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-light);
+  margin-bottom: 0.5rem;
+}
+
+.footer h4 a {
+  text-decoration: none;
+  color: var(--primary-color);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.footer h4 a:hover {
+  color: var(--primary-color-dark);
+}
+p a{
+  text-decoration: none;
+  color: var(--primary-color);
+  font-size: 1rem;
+  font-weight: 500;
+}

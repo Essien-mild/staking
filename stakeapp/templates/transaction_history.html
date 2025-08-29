@@ -1,0 +1,215 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Transaction History</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" />
+  <link rel="stylesheet" href="{% static 'css/home.css' %}" />
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="logo">Carlsberg</div>
+    <div class="nav-menu">
+      <a href="{% url 'dashboard' %}" class="nav-item"><i class="fas fa-home"></i><span>Home</span></a>
+      <a href="{% url 'deposit' %}" class="nav-item"><i class="fa-solid fa-money-bill-1"></i><span>Deposit</span></a>
+      <a href="{% url 'withdraw' %}" class="nav-item"><i class="fas fa-wallet"></i><span>Withdrawal</span></a>
+      <a href="{% url 'plans' %}" class="nav-item"><i class="fa-solid fa-arrow-up-right-from-square"></i><span>Staking</span></a>
+      <a href="{% url 'transaction_history' %}" class="nav-item active"><i class="fa-solid fa-rotate"></i><span>Transactions</span></a>
+      <a href="{% url 'logout' %}" class="nav-item"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Header -->
+    <div class="header">
+      <div class="welcome-section">
+        <p class="greeting">Hello! {{ request.user.username }}</p>
+        <h1 class="welcome-title">Your Transaction History</h1>
+      </div>
+      <div class="header-right">
+        <div class="user-profile">
+          <img src="{% static 'images/default.jpeg' %}" alt="User" class="profile-pic" />
+        </div>
+        <div class="hamburger-menu"><i class="ri-menu-line"></i></div>
+      </div>
+    </div>
+
+    <!-- Dashboard Container -->
+    <div class="dashboard-container">
+      <!-- Dashboard Main -->
+      <div class="dashboard-main">
+          <!-- Transfer Cards -->
+          <div class="transfer-cards">
+            <div class="transfer-card">
+              <div class="card-icon">
+                <i class="fas fa-credit-card"></i>
+              </div>
+              <p class="card-title">Balance</p>
+              <h2 class="card-amount">${{ balance.withdrawable }}</h2>
+            </div>
+
+            <div class="transfer-card">
+              <div class="card-icon">
+                <i class="fas fa-exchange-alt"></i>
+              </div>
+              <p class="card-title">Total staked</p>
+              <h2 class="card-amount">${{ balance.staking }}</h2>
+            </div>
+
+            <div class="transfer-card">
+              <div class="card-icon">
+                <i class="fas fa-university"></i>
+              </div>
+              <p class="card-title">Savings Balance</p>
+              <h2 class="card-amount">${{ balance.saving }}</h2>
+            </div>
+          </div>
+        <!-- Transaction Section -->
+        <div class="transaction-section">
+
+          <!-- Deposit History -->
+          <div class="transaction-card">
+            <h3 class="section-title">Deposit History</h3>
+            {% for deposit in deposits %}
+            <div class="transaction-item">
+              <div class="transaction-icon"><i class="fa-solid fa-rotate"></i></div>
+              <div class="transaction-content">
+                <div class="transaction-title">{{ deposit.status|title }}</div>
+                <div class="transaction-time">
+                  <i class="far fa-clock"></i> {{ deposit.created_at|date:"M d, Y, H:i" }}
+                </div>
+              </div>
+              <div class="transaction-amount {% if deposit.status == 'pending' %}neutral{% else %}positive{% endif %}">${{ deposit.amount }}</div>
+            </div>
+            {% empty %}
+            <p style="padding: 10px;">No deposit history available.</p>
+            {% endfor %}
+          </div>
+
+          <!-- Withdrawal History -->
+          <div class="transaction-card">
+            <h3 class="section-title">Withdrawal History</h3>
+            {% for withdrawal in withdrawals %}
+            <div class="transaction-item">
+              <div class="transaction-icon"><i class="fa-solid fa-rotate"></i></div>
+              <div class="transaction-content">
+                <div class="transaction-title">{{ withdrawal.status|title }}</div>
+                <div class="transaction-time">
+                  <i class="far fa-clock"></i> {{ withdrawal.created_at|date:"M d, Y, H:i" }}
+                </div>
+              </div>
+              <div class="transaction-amount {% if withdrawal.status == 'successful' %}negative{% elif withdrawal.status == 'declined' %}neutral{% else %}negative{% endif %}">-${{ withdrawal.amount }}</div>
+            </div>
+            {% empty %}
+            <p style="padding: 10px;">No withdrawal history available.</p>
+            {% endfor %}
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Optional Sidebar (Earnings or Analytics) -->
+      <div class="dashboard-sidebar">
+          <div class="savings-card">
+            <h3 class="savings-title">Carlsberg Triangular Arbitrage Earnings</h3>
+            <div class="savings-amount">$27.5M</div>
+
+            <div class="time-filter">
+              <button class="time-option">Daily</button>
+              <button class="time-option">Weekly</button>
+              <button class="time-option active">Monthly</button>
+              <button class="time-option">Annual</button>
+            </div>
+
+            <div class="chart-container">
+              <svg
+                class="chart"
+                viewBox="0 0 300 100"
+                preserveAspectRatio="none"
+              >
+                <defs>
+                  <linearGradient
+                    id="gradientFill"
+                    x1="0%"
+                    y1="0%"
+                    x2="0%"
+                    y2="100%"
+                  >
+                    <stop offset="0%" stop-color="#4270F4" stop-opacity="0.7" />
+                    <stop
+                      offset="100%"
+                      stop-color="#4270F4"
+                      stop-opacity="0.1"
+                    />
+                  </linearGradient>
+                </defs>
+                <path
+                  class="chart-line-path"
+                  d="M0,80 C20,70 40,30 60,60 C80,90 100,40 120,30 C140,20 160,50 180,20 C200,30 220,60 240,80 C260,60 280,40 300,60"
+                ></path>
+                <path
+                  class="chart-area"
+                  d="M0,80 C20,70 40,30 60,60 C80,90 100,40 120,30 C140,20 160,50 180,20 C200,30 220,60 240,80 C260,60 280,40 300,60 L300,100 L0,100 Z"
+                ></path>
+                <circle
+                  cx="180"
+                  cy="20"
+                  r="6"
+                  fill="#4270F4"
+                  stroke="#ffffff"
+                  stroke-width="3"
+                />
+              </svg>
+            </div>
+
+            <div class="timeline">
+              <div class="month">Oct</div>
+              <div class="month">Nov</div>
+              <div class="month active">Dec</div>
+              <div class="month">Jan</div>
+              <div class="month">Feb</div>
+              <div class="month">Mar</div>
+            </div>
+          </div>
+
+          <div class="plan-card">
+            <div class="plan-info">
+              <div class="plan-title">Monthly analyst only availiable</div>
+              <div class="plan-status">Carlsberg Arbitrage success rate</div>
+            </div>
+
+            <div class="plan-progress">
+              <div class="plan-percentage">81.1%</div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+
+  <!-- Sidebar Script -->
+  <script>
+    const hamburgerMenu = document.querySelector('.hamburger-menu');
+    const sidebar = document.querySelector('.sidebar');
+    const mainContent = document.querySelector('.main-content');
+
+    hamburgerMenu.addEventListener('click', () => {
+      sidebar.classList.toggle('active');
+      mainContent.classList.toggle('sidebar-active');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!sidebar.contains(e.target) && !hamburgerMenu.contains(e.target) && sidebar.classList.contains('active')) {
+        sidebar.classList.remove('active');
+        mainContent.classList.remove('sidebar-active');
+      }
+    });
+  </script>
+   <script src="//code.jivosite.com/widget/Bi2zIf0O8h" async></script>
+</body>
+</html>

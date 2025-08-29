@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .email-wrapper {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        .otp-box {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-top: 20px;
+        }
+        body{
+        background-color: #000000bb;
+        color: aliceblue;
+      }
+    </style>
+    </style>
+</head>
+<body>
+    <div class="email-wrapper">
+        <h2>Hello {{ username }},</h2>
+        <p>Thank you for registering. Please use the OTP below to verify your email:</p>
+        <div class="otp-box">{{ otp }}</div>
+        <p>This code will expire in 10 minutes.</p>
+        <h3>Security tips:</h3>
+        <p>1. Never give your password to anyone</p>
+        <p>2. Never call any phone number for someone claiming to be Support</p>
+        <p>3.Never send any money to anyone claiming to be a member of team </p>
+        <p>If you don't recognize this activity, please contact our customer support immediately.</p>
+        <p>This is an automated message, Please do not reply</p>
+        
+    </div>
+</body>
+</html>
