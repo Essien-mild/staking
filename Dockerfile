@@ -1,8 +1,8 @@
 # Dockerfile
 FROM python:3.12-slim
 
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
@@ -17,4 +17,6 @@ COPY . /app/
 RUN python manage.py collectstatic --noinput
 
 # Run Gunicorn using shell to read $PORT
-CMD sh -c "gunicorn Staking.wsgi:application --bind 0.0.0.0:${PORT:-8000}"
+ENTRYPOINT ["sh", "-c"]
+CMD ["gunicorn Staking.wsgi:application --bind 0.0.0.0:${PORT:-8000}"]
+
