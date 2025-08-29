@@ -28,8 +28,8 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-ALLOWED_HOSTS = ["*"]
+DEBUG = True
+ALLOWED_HOSTS = ['staking-dko0.onrender.com','carlsbergstaking.online']
 
 
 # Application definition
@@ -174,3 +174,14 @@ ADMIN_NOTIFICATION_EMAIL = os.getenv("ADMIN_NOTIFICATION_EMAIL")
 
 
 AUTH_USER_MODEL = 'authentication.User'
+
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://staking-dko0.onrender.com',
+    'https://www.carlsbergstaking.online',
+]
+
+
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
