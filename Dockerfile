@@ -1,25 +1,21 @@
 # Dockerfile
 FROM python:3.12-slim
 
-# Prevent Python from writing pyc files & buffering stdout
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
+# Prevent Python from writing pyc files & enable unbuffered output
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
-# Set working directory
 WORKDIR /app
 
 # Install dependencies
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+COPY requirements.txt /app/
+RUN pip install --upgrade pip && pip install -r requirements.txt
 
 # Copy project files
-COPY . .
+COPY . /app/
 
-# Collect static files into /app/staticfiles
+# Collect static files
 RUN python manage.py collectstatic --noinput
 
-# Expose port 8000
-EXPOSE 8000
-
-# Run the app with gunicorn
-CMD ["gunicorn", "Staking.wsgi:application", "--bind", "0.0.0.0:8000"]
+# Run Gunicorn
+CMD ["gunicorn", "Staking.wsgi:application", "--bind", "0.0.0.0:$PORT"]

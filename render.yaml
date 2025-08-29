@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: staking-app
+    env: docker
+    dockerfilePath: ./Dockerfile
+    plan: starter
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: staking-db
+          property: connectionString
+      - key: SECRET_KEY
+        value: your-secret-here
+      - key: DEBUG
+        value: false
+
+databases:
+  - name: staking-db
+    plan: starter
