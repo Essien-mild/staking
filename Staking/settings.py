@@ -179,5 +179,6 @@ AUTH_USER_MODEL = 'authentication.User'
 CSRF_TRUSTED_ORIGINS = [
     'https://staking-dko0.onrender.com',
     'https://www.carlsbergstaking.online',
+    'httsp://carlsbergstaking.online',
 ]
 
