@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.utils import timezone
 
 class Balance(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -22,7 +23,7 @@ class Deposit(models.Model):
     proof_image = models.ImageField(upload_to='deposit_proofs/')
     description = models.TextField(blank=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(default=timezone.now) 
 
     def __str__(self):
         return f"Deposit by {self.user.email} - {self.amount} ({self.status})"
@@ -39,7 +40,7 @@ class Withdrawal(models.Model):
     amount = models.DecimalField(max_digits=12, decimal_places=2)
     bitcoin_address = models.CharField(max_length=100)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return f"Withdrawal by {self.user.email} - {self.amount} ({self.status})"

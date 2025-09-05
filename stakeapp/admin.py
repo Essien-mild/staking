@@ -21,6 +21,7 @@ class DepositAdmin(admin.ModelAdmin):
     search_fields = ('user__email', 'description')
     ordering = ('-created_at',)
     list_editable = ('status',)
+    fields = ('user', 'amount', 'proof_image', 'description', 'status', 'created_at')
 
     def view_proof(self, obj):
         if obj.proof_image:
@@ -36,3 +37,4 @@ class WithdrawalAdmin(admin.ModelAdmin):
     search_fields = ('user__email', 'bitcoin_address')
     ordering = ('-created_at',)
     list_editable = ('status',)
+    fields = ('user', 'email', 'amount', 'bitcoin_address', 'status', 'created_at')
